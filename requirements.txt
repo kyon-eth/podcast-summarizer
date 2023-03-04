@@ -1,0 +1,9 @@
+dotenv
+requests
+json
+urllib
+pydub
+spotipy
+openai
+tiktoken
+youtube_dl
