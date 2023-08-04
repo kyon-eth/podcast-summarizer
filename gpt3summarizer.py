@@ -88,6 +88,9 @@ class GPT3Summarizer:
                 buffer = ""
                 token_count = 0
                 
+        if buffer:
+            chunks.append(buffer)
+            
         print(f'↪ Chunks: {len(chunks)} ({transcript.count(".")} sentences)')
         
         return chunks
