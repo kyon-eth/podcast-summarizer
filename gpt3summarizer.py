@@ -36,10 +36,9 @@ class GPT3Summarizer:
             else:
                 print(response)
                 Exception("No choices returned from GPT-3 API using model 'text-davinci-003'")
-                
-        elif self.model_engine == "gpt-3.5-turbo":
-            response = openai.ChatCompletion.create(
-                model="gpt-3.5-turbo",
+        else:
+            response = openai.chat.completions.create(
+                model=self.model_engine,
                 messages=[
                         {"role": "system", "content": "You are an AI assistant that summarizes podcasts"},
                         {"role": "user", "content": prompt},
@@ -51,12 +50,12 @@ class GPT3Summarizer:
                 total_tokens = response.usage.total_tokens
             else:
                 print(response)
-                Exception("No choices returned from GPT-3 API using model 'gpt-3.5-turbo'")
+                Exception(f"No choices returned from GPT API using model {self.model_engine}")
             
             return content, total_tokens
         
     def process_chunks(self, chunks):
-        # Process each chunk with GPT-3
+        # Process each chunk with GPT
         tokens_used = 0
         summaries = []
         for chunk in chunks:
@@ -126,4 +125,3 @@ class GPT3Summarizer:
         with open(f"downloads/gpt3/{file_id}_{self.model_engine}_summary.txt", "w") as f:
             f.write(summary)
             print(f'↪ {max_sentences} sentence summary saved to {file_id}_{self.model_engine}_summary.txt')
-        
