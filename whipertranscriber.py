@@ -73,7 +73,9 @@ class WhisperTranscriber:
 
                 # Convert the MP3 file to text using Whisper API
                 file = open(audio, "rb")
-                response = openai.Audio.transcribe("whisper-1", file)
+                response = openai.audio.transcriptions.create(
+                    model="whisper-1", 
+                    file=file)
 
                 # Check for errors in the API response
                 if "error" in response:
@@ -81,7 +83,7 @@ class WhisperTranscriber:
                     raise Exception(f"⚠️ Transcription error: {error_msg}")
 
                 # Extract the transcript from the API response
-                transcript = response["text"].strip()
+                transcript = response.text.strip()
 
                 # Save the transcript to a text file
                 with open(transcript_path, "w") as f:
